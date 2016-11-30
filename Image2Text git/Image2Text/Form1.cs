@@ -5,7 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
@@ -20,85 +20,278 @@ namespace Image2Text
         public Image2Text()
         {
             InitializeComponent();
-            imageBox_input.FunctionalMode = ImageBox.FunctionalModeOption.Minimum;
+            imageBoxInput.FunctionalMode = ImageBox.FunctionalModeOption.Minimum;
+            maxReference = 255;
         }
-        Image<Gray, byte> image_in;
-        int total_rows = 0, total_cols = 0;
-        bool flag_binary = true;
-    
-        private void button_open_image_Click(object sender, EventArgs e)
-        {  
-            DialogResult res = openFileDialog.ShowDialog();
+        Image<Bgr, byte> imageIn;
+        Image<Bgra, byte> grid;
+
+        //       int totalRows = 0, totalCols = 0;
+        bool flagBinary = false;
+        bool startDrawing = false;
+        int totalRows, totalCols;
+        Point previousPoint;
+        MCvScalar lineColor;
+        private void buttonOpenImageClick(object sender, EventArgs e)
+        {
+            startDrawing = false;
+            var res = openFileDialog.ShowDialog();
             if (res == DialogResult.OK)
             {
-                string path_to_image = openFileDialog.FileName;
+                var path2Image = openFileDialog.FileNames;
+                var totalImages = path2Image.Length;
+                progressBar.Value = 0;
+                progressBar.Maximum = totalImages;
+                progressBar.Step = 1;
                 try
                 {
-                    image_in = new Image<Gray, byte>(path_to_image);
-                    total_rows = image_in.Rows;
-                    total_cols = image_in.Cols;
-                    if (image_in.Rows > 300 || image_in.Cols > 300)
-                    {
-                        Image<Gray, byte> image_in_small = image_in.Resize(300, 300, Inter.Linear);//this is image with resize
-                        imageBox_input.Image = image_in_small;
-                        tbr_info.ForeColor = Color.Green;
-                        tbr_info.Text = "Displaying Resized Image";
-                    }
-                    else
-                    {
-                        tbr_info.ForeColor = Color.Green;
-                        imageBox_input.Image = image_in;
-                        tbr_info.Text = "Displaying Image";
+                    foreach(string path2ImageFile in path2Image)
+                    {                        
+                        imageIn = new Image<Bgr, byte>(path2ImageFile);
+                        totalRows = imageIn.Rows;
+                        totalCols = imageIn.Cols;
+                        
+                        textBoxInfo.ForeColor = Color.Green;
+                        imageBoxInput.Image = imageIn;
+                        textBoxInfo.Text = "Displaying Image";
+                       
+                        progressBar.PerformStep();
+                        saveMultiple(path2ImageFile);
                     }
                 }
                 catch (Exception exep)
                 {
-                    tbr_info.ForeColor = Color.Red;
-                    tbr_info.Text = Convert.ToString(exep);
+                    textBoxInfo.ForeColor = Color.Red;
+                    textBoxInfo.Text = Convert.ToString(exep);
                 }
             }
             else
             {
-                tbr_info.ForeColor = Color.Red;
-                tbr_info.Text = "Error in Opening File, please select bitmap image file";
+                textBoxInfo.ForeColor = Color.Red;
+                textBoxInfo.Text = "Error in Opening File, please select bitmap image file";
             }
             openFileDialog.Dispose();
         }
-
-        private void checkBox_binary_CheckedChanged(object sender, EventArgs e)
+        byte maxReference;
+        private void saveMultiple(string fileName)
         {
-            
+            try
+            {
+                fileName += ".txt";
+                using (StreamWriter fs = new StreamWriter(fileName, true))
+                {
+                    fs.Write("unsigned int array[" + totalRows + "][" + totalCols + "]=");
+                    int row, col;
+                    byte pixel;
+                    for (row = 0; row < totalRows; row++)
+                    {
+                        fs.Write("{");
+                        for (col = 0; col < totalCols; col++)
+                        {
+                            pixel = imageIn.Data[row, col, 0];
+
+                            if (checkBoxBinary.Checked)
+                            {
+                                if (pixel > 122)
+                                {
+                                    fs.Write("0x00");
+                                }
+                                else
+                                    fs.Write("0xFF");
+                            }
+                            else
+                            {
+                                if (checkBoxInvert.Checked)
+                                    fs.Write(maxReference - pixel);
+                                else
+                                    fs.Write(pixel);
+                            }
+                            if (col != (totalCols - 1)) fs.Write(",");
+
+                            if ((col + 1) % 20 == 0) fs.Write("\r\n");
+                        }
+                        if (row != (totalRows - 1)) fs.Write("},\r\n");
+                    }
+                    fs.Write("}};");
+                    fs.Flush(); // Added
+                    textBoxInfo.ForeColor = Color.Green;
+                    textBoxInfo.Text = "Conversion Done";
+                }
+            }
+            catch (Exception exep)
+            {
+                //display error here
+                textBoxInfo.ForeColor = Color.Red;
+                textBoxInfo.Text = Convert.ToString(exep);
+            }
         }
 
-        private void button_save_file_Click(object sender, EventArgs e)
+        private void imageBoxInputMouseMove(object sender, MouseEventArgs e)
         {
-            flag_binary = Convert.ToBoolean(checkBox_binary.CheckState);
-            if (total_cols == 0 || total_rows == 0)
+            if (imageIn == null) return;
+            if (e.Button != MouseButtons.Left) return;
+            startDrawing = true;
+            if (startDrawing)
             {
-                tbr_info.ForeColor = Color.Red;
-                tbr_info.Text = "Please Select Image first";
+                var currentPoint = coordinatesConversion(e.X, e.Y);
+               
+                CvInvoke.Line(imageIn, previousPoint, currentPoint, lineColor);
+              
+                previousPoint = currentPoint;
+            }
+            imageBoxInput.Image = imageIn;
+        }
+
+        private void imageBoxInputMouseUp(object sender, MouseEventArgs e)
+        {
+            startDrawing = false;
+        }
+
+        private void imageBoxInputMouseDown(object sender, MouseEventArgs e)
+        {
+            if (imageIn == null) return;
+                previousPoint = coordinatesConversion(e.X, e.Y);
+                CvInvoke.Line(imageIn, previousPoint, previousPoint, lineColor);
+                imageBoxInput.Image = imageIn;
+         
+        }
+
+        private Point coordinatesConversion(int x, int y)
+        {
+            Point convertedPoint;
+            float X, Y;
+
+            var wRatio = (float)imageBoxInput.Width / totalCols;
+            var hRatio = (float)imageBoxInput.Height / totalRows;
+            X = x / wRatio;
+            Y = y / hRatio;
+            convertedPoint = new Point((int)X, (int)Y);
+
+            //float imgBoxAspectRatio = imageBoxInput.Width / imageBoxInput.Height;
+            //float imageAspectRatio = totalCols / totalRows;
+
+            //if (imgBoxAspectRatio > imageAspectRatio)
+            //{
+            //    Y = totalRows * y / imageBoxInput.Height;
+            //    float scaledWidth = totalCols * imageBoxInput.Height / totalRows;
+            //    var dx = (totalCols - scaledWidth) / 2;
+            //    X = (x - dx) * totalRows / imageBoxInput.Height;
+            //}
+            //else
+            //{
+            //    X = totalCols * x  / imageBoxInput.Width;
+            //    float scaledHeight = totalRows * imageBoxInput.Width / totalCols;
+            //    var dy = (totalRows - scaledHeight) / 2;
+            //    Y = (y - dy) * totalCols / imageBoxInput.Width;
+            //}
+            convertedPoint = new Point((int)X, (int)Y);
+            return convertedPoint;
+        }
+
+        private void buttonClear_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                totalRows = Convert.ToInt16(textBoxRows.Text);
+                totalCols = Convert.ToInt16(textBoxColumns.Text);
+                imageIn = new Image<Bgr, byte>(totalCols, totalRows);
+                for (int row = 0; row < totalRows; row++)
+                {
+                    for (int col = 0; col < totalCols; col++)
+                    {
+                        imageIn.Data[row, col, 0] = 255;
+                        imageIn.Data[row, col, 1] = 255;
+                        imageIn.Data[row, col, 2] = 255;
+
+                    }
+                }
+                imageBoxInput.Image = imageIn;
+            }
+            catch (Exception)
+            {
+                textBoxInfo.ForeColor = Color.Red;
+                textBoxInfo.Text = "Error in generating blank image, did you selected proper resolution?";
+            }
+
+            //creating Grid
+            grid = new Image<Bgra, byte>(500, 500);
+            for (int row = 0; row < grid.Rows; row++)
+            {
+             
+                for (int col = 0; col < grid.Cols; col++)
+                {
+                    grid.Data[row, col, 1] = 0;
+                    grid.Data[row, col, 2] = 0;
+                    grid.Data[row, col, 0] = 0;
+                    grid.Data[row, col, 3] = 0;
+
+                    if (row % (grid.Rows/totalRows) == 0)
+                    {
+                       grid.Data[row, col, 3] = 250;
+                    }
+                    if (col % (grid.Rows / totalRows) == 0)
+                    {
+                        grid.Data[row, col, 3] = 250;
+
+                    }
+                }
+            }
+            imageBoxGrid.Parent = imageBoxInput;
+            imageBoxGrid.Location = new Point(0, 0);
+            imageBoxGrid.Image = grid;
+        }
+
+        private void buttonPickColor_Click(object sender, EventArgs e)
+        {
+            var color = colorDialog.ShowDialog();
+            if (color == DialogResult.OK)
+            {
+                var selectedColor = colorDialog.Color;
+                lineColor = new MCvScalar(selectedColor.B, selectedColor.G, selectedColor.R);
+            }
+        }
+
+        private void buttonSaveImage_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CvInvoke.Imwrite("testImage.bmp", imageIn);
+            }
+            catch (Exception)
+            {
+                textBoxInfo.Text="Error in saving Image, did you open or made New file?";              
+            }           
+        }
+
+        private void buttonSaveFileClick(object sender, EventArgs e)
+        {
+            flagBinary = Convert.ToBoolean(checkBoxBinary.CheckState);
+            if (totalCols == 0 || totalRows == 0)
+            {
+                textBoxInfo.ForeColor = Color.Red;
+                textBoxInfo.Text = "Please Select Image first";
             }
             else
             {
-                DialogResult res = saveFileDialog1.ShowDialog();
+                var res = saveFileDialog1.ShowDialog();
                 if (res == DialogResult.OK)
                 {
                     try
                     {
-                        string path_to_textfile = saveFileDialog1.FileName;
-                        using (StreamWriter fs = new StreamWriter(path_to_textfile, true))
+                        var path2Textfile = saveFileDialog1.FileName;
+                        using (StreamWriter fs = new StreamWriter(path2Textfile, true))
                         {
-                            fs.Write("unsigned int array[" + total_rows + "][" + total_cols + "]=");
+                            fs.Write("unsigned int array[" + totalRows + "][" + totalCols + "]=");
                             int row, col;
                             byte pixel;
-                            for (row = 0; row < total_rows; row++)
+                            for (row = 0; row < totalRows; row++)
                             {
                                 fs.Write("{");
-                                for (col = 0; col < total_cols; col++)
+                                for (col = 0; col < totalCols; col++)
                                 {
-                                    pixel = image_in.Data[row, col, 0];
+                                    pixel = imageIn.Data[row, col, 0];
 
-                                    if (flag_binary)
+                                    if (flagBinary)
                                     {
                                         if (pixel > 122)
                                         {
@@ -109,35 +302,38 @@ namespace Image2Text
                                     }
                                     else
                                     {
-                                        fs.Write(pixel);
+                                        if (checkBoxInvert.Checked)
+                                            fs.Write(maxReference - pixel);
+                                        else
+                                            fs.Write(pixel);
                                     }
-                                    if (col != (total_cols - 1)) fs.Write(",");
+                                    if (col != (totalCols - 1)) fs.Write(",");
 
                                     if ((col + 1) % 20 == 0) fs.Write("\r\n");
                                 }
-                                if (row != (total_rows - 1)) fs.Write("},\r\n");
+                                if (row != (totalRows - 1)) fs.Write("},\r\n");
                             }
                             fs.Write("}};");
                             fs.Flush(); // Added
-                            tbr_info.ForeColor = Color.Green;
-                            tbr_info.Text = "Conversion Done";
+                            textBoxInfo.ForeColor = Color.Green;
+                            textBoxInfo.Text = "Conversion Done";
                         }
 
                     }
                     catch (Exception exep)
                     {
                         //display error here
-                        tbr_info.ForeColor = Color.Red;
-                        tbr_info.Text = Convert.ToString(exep);
+                        textBoxInfo.ForeColor = Color.Red;
+                        textBoxInfo.Text = Convert.ToString(exep);
                     }
                 }
                 else
                 {
-                    tbr_info.ForeColor = Color.Red;
-                    tbr_info.Text = "Error in Creating File, please create or select text file (.txt)";
+                    textBoxInfo.ForeColor = Color.Red;
+                    textBoxInfo.Text = "Error in Creating File, please create or select text file (.txt)";
                 }
                 saveFileDialog1.Dispose();
-                image_in.Dispose();
+                imageIn.Dispose();
             }
            
         }
