@@ -12,6 +12,7 @@ using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Emgu.CV.UI;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Image2Text
 {
@@ -22,6 +23,29 @@ namespace Image2Text
             InitializeComponent();
             imageBoxInput.FunctionalMode = ImageBox.FunctionalModeOption.Minimum;
             maxReference = 255;
+            imageBoxInput.MouseWheel += ImageBoxInput_MouseWheel;
+        }
+        private void Image2Text_Load(object sender, EventArgs e)
+        {
+            info = "Scroll Up/Down to Change Line Thickness";
+            lineType = LineType.AntiAlias;
+        }
+
+        LineType lineType;
+        private void ImageBoxInput_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if ((trackBarLineThickness.Value + e.Delta / 100) < 6 && (trackBarLineThickness.Value + e.Delta / 100)>0)
+            trackBarLineThickness.Value += e.Delta/100;
+        }
+
+        string info
+        {
+            set
+            {
+                textBoxInfo.Invoke((MethodInvoker)(() => textBoxInfo.SelectionStart = textBoxInfo.Text.Length));
+                textBoxInfo.Invoke((MethodInvoker)(() => textBoxInfo.ScrollToCaret()));
+                textBoxInfo.AppendText("\n"+value);
+            }
         }
         Image<Bgr, byte> imageIn;
         Image<Bgra, byte> grid;
@@ -32,9 +56,10 @@ namespace Image2Text
         int totalRows, totalCols;
         Point previousPoint;
         MCvScalar lineColor;
-        private void buttonOpenImageClick(object sender, EventArgs e)
+
+        private async void buttonOpenImageClickAsync(object sender, EventArgs e)
         {
-            startDrawing = false;
+           
             var res = openFileDialog.ShowDialog();
             if (res == DialogResult.OK)
             {
@@ -52,9 +77,12 @@ namespace Image2Text
                         totalCols = imageIn.Cols;
                         
                         textBoxInfo.ForeColor = Color.Green;
+
                         imageBoxInput.Image = imageIn;
-                        textBoxInfo.AppendText("\nDisplaying Image");
-                       
+                        
+                        await Task.Delay(100);
+                        
+                        info = "Displaying Image"; 
                         progressBar.PerformStep();
                         saveMultiple(path2ImageFile);
                     }
@@ -62,17 +90,21 @@ namespace Image2Text
                 catch (Exception exep)
                 {
                     textBoxInfo.ForeColor = Color.Red;
-                    textBoxInfo.AppendText(Convert.ToString(exep));
+                    info=Convert.ToString(exep);
                 }
             }
             else
             {
                 textBoxInfo.ForeColor = Color.Red;
-                textBoxInfo.AppendText("\nError in Opening File, please select bitmap image file\n");
+                info="Error in Opening File, please select bitmap image file\n";
             }
+            startDrawing = false;
+            imageBoxPreview.Image = imageIn;
+            imageBoxPreview.SetZoomScale(0.5, new Point(imageBoxPreview.Width / 2, imageBoxPreview.Height / 2));
             gridGenerator();
             openFileDialog.Dispose();
         }
+
         byte maxReference;
         private void saveMultiple(string fileName)
         {
@@ -116,14 +148,14 @@ namespace Image2Text
                     fs.Write("}};");
                     fs.Flush(); // Added
                     textBoxInfo.ForeColor = Color.Green;
-                    textBoxInfo.AppendText("\nConversion Done"); 
+                    info="Text File Saved in "+fileName;
                 }
             }
             catch (Exception exep)
             {
                 //display error here
                 textBoxInfo.ForeColor = Color.Red;
-                textBoxInfo.AppendText("\n"+Convert.ToString(exep));
+                info=Convert.ToString(exep);
             }
         }
 
@@ -135,8 +167,8 @@ namespace Image2Text
             if (startDrawing)
             {
                 var currentPoint = coordinatesConversion(e.X, e.Y);
-               
-                CvInvoke.Line(imageIn, previousPoint, currentPoint, lineColor,1,LineType.EightConnected);
+
+                CvInvoke.Line(imageIn, previousPoint, currentPoint, lineColor, trackBarLineThickness.Value,lineType);
               
                 previousPoint = currentPoint;
             }
@@ -154,7 +186,7 @@ namespace Image2Text
         {
             if (imageIn == null) return;
                 previousPoint = coordinatesConversion(e.X, e.Y);
-                CvInvoke.Line(imageIn, previousPoint, previousPoint, lineColor);
+                CvInvoke.Line(imageIn, previousPoint, previousPoint, lineColor, trackBarLineThickness.Value, lineType);
                 imageBoxInput.Image = imageIn;
             imageBoxPreview.Image = imageIn;
             imageBoxPreview.SetZoomScale(0.5, new Point(imageBoxPreview.Width/2, imageBoxPreview.Height/2));
@@ -194,7 +226,7 @@ namespace Image2Text
             catch (Exception)
             {
                 textBoxInfo.ForeColor = Color.Red;
-                textBoxInfo.AppendText("\nError in generating blank image, did you selected proper resolution?");
+                info="Error in generating blank image, did you selected proper resolution?";
             }
             gridGenerator();
         }
@@ -248,14 +280,26 @@ namespace Image2Text
                 {
                     var fileName = saveFileDialog.FileName;
                     CvInvoke.Imwrite(fileName, imageIn);
-                    textBoxInfo.AppendText("\nImage Saved: " + fileName);
+                    info="Image Saved: " + fileName;
                 }
                
             }
             catch (Exception)
             {
-                textBoxInfo.AppendText("\nError in saving Image, did you open or made New file?");              
+                info="\nError in saving Image, did you open or made New file?";              
             }           
+        }
+
+        private void checkBoxBlurredLine_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxBlurredLine.CheckState == CheckState.Checked)
+            {
+                lineType = LineType.AntiAlias;
+            }
+            else if (checkBoxBlurredLine.CheckState == CheckState.Unchecked)
+                lineType = LineType.EightConnected;
+            else
+                lineType = LineType.FourConnected;
         }
 
         private void buttonSaveFileClick(object sender, EventArgs e)
@@ -264,7 +308,7 @@ namespace Image2Text
             if (totalCols == 0 || totalRows == 0)
             {
                 textBoxInfo.ForeColor = Color.Red;
-                textBoxInfo.AppendText("\nPlease Select Image first");
+               info="\nPlease Select Image first";
             }
             else
             {
@@ -311,7 +355,7 @@ namespace Image2Text
                             fs.Write("}};");
                             fs.Flush(); // Added
                             textBoxInfo.ForeColor = Color.Green;
-                            textBoxInfo.AppendText("\nConversion Done");
+                            info="\nConversion Done";
                         }
 
                     }
@@ -319,13 +363,13 @@ namespace Image2Text
                     {
                         //display error here
                         textBoxInfo.ForeColor = Color.Red;
-                        textBoxInfo.AppendText("\n"+Convert.ToString(exep));
+                        info=Convert.ToString(exep);
                     }
                 }
                 else
                 {
                     textBoxInfo.ForeColor = Color.Red;
-                    textBoxInfo.AppendText("\nError in Creating File, please create or select text file (.txt)");
+                    info = "Error in Creating File, please create or select text file (.txt)";
                 }
                 saveFileDialog1.Dispose();
                 imageIn.Dispose();

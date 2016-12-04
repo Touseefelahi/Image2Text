@@ -46,7 +46,6 @@
             this.labelCol = new System.Windows.Forms.Label();
             this.buttonClear = new System.Windows.Forms.Button();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.buttonPickColor = new System.Windows.Forms.Button();
             this.buttonSaveImage = new System.Windows.Forms.Button();
             this.imageBoxGrid = new Emgu.CV.UI.ImageBox();
             this.imageBoxPreview = new Emgu.CV.UI.ImageBox();
@@ -57,6 +56,9 @@
             this.colorPicked = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.trackBarLineThickness = new System.Windows.Forms.TrackBar();
+            this.labelLineThickness = new System.Windows.Forms.Label();
+            this.checkBoxBlurredLine = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.imageBoxInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageBoxGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageBoxPreview)).BeginInit();
@@ -65,21 +67,22 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarLineThickness)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonOpenImage
             // 
-            this.buttonOpenImage.Location = new System.Drawing.Point(202, 2);
+            this.buttonOpenImage.Location = new System.Drawing.Point(140, 2);
             this.buttonOpenImage.Name = "buttonOpenImage";
             this.buttonOpenImage.Size = new System.Drawing.Size(75, 34);
             this.buttonOpenImage.TabIndex = 0;
             this.buttonOpenImage.Text = "Open Image File";
             this.buttonOpenImage.UseVisualStyleBackColor = true;
-            this.buttonOpenImage.Click += new System.EventHandler(this.buttonOpenImageClick);
+            this.buttonOpenImage.Click += new System.EventHandler(this.buttonOpenImageClickAsync);
             // 
             // buttonSaveFile
             // 
-            this.buttonSaveFile.Location = new System.Drawing.Point(283, 2);
+            this.buttonSaveFile.Location = new System.Drawing.Point(221, 2);
             this.buttonSaveFile.Name = "buttonSaveFile";
             this.buttonSaveFile.Size = new System.Drawing.Size(75, 34);
             this.buttonSaveFile.TabIndex = 1;
@@ -121,7 +124,7 @@
             this.textBoxInfo.ReadOnly = true;
             this.textBoxInfo.Size = new System.Drawing.Size(751, 53);
             this.textBoxInfo.TabIndex = 3;
-            this.textBoxInfo.Text = "Please open image file";
+            this.textBoxInfo.Text = "Please open image file, or create a New one";
             // 
             // labelInfo
             // 
@@ -135,7 +138,7 @@
             // checkBoxBinary
             // 
             this.checkBoxBinary.AutoSize = true;
-            this.checkBoxBinary.Location = new System.Drawing.Point(373, 4);
+            this.checkBoxBinary.Location = new System.Drawing.Point(311, 4);
             this.checkBoxBinary.Name = "checkBoxBinary";
             this.checkBoxBinary.Size = new System.Drawing.Size(55, 17);
             this.checkBoxBinary.TabIndex = 5;
@@ -154,7 +157,7 @@
             this.checkBoxInvert.AutoSize = true;
             this.checkBoxInvert.Checked = true;
             this.checkBoxInvert.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxInvert.Location = new System.Drawing.Point(373, 21);
+            this.checkBoxInvert.Location = new System.Drawing.Point(311, 21);
             this.checkBoxInvert.Name = "checkBoxInvert";
             this.checkBoxInvert.Size = new System.Drawing.Size(53, 17);
             this.checkBoxInvert.TabIndex = 7;
@@ -163,7 +166,7 @@
             // 
             // textBoxRows
             // 
-            this.textBoxRows.Location = new System.Drawing.Point(103, 14);
+            this.textBoxRows.Location = new System.Drawing.Point(103, 15);
             this.textBoxRows.Mask = "000";
             this.textBoxRows.Name = "textBoxRows";
             this.textBoxRows.Size = new System.Drawing.Size(41, 20);
@@ -172,7 +175,7 @@
             // 
             // textBoxColumns
             // 
-            this.textBoxColumns.Location = new System.Drawing.Point(58, 14);
+            this.textBoxColumns.Location = new System.Drawing.Point(58, 15);
             this.textBoxColumns.Mask = "000";
             this.textBoxColumns.Name = "textBoxColumns";
             this.textBoxColumns.Size = new System.Drawing.Size(41, 20);
@@ -207,19 +210,9 @@
             this.buttonClear.UseVisualStyleBackColor = true;
             this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
-            // buttonPickColor
-            // 
-            this.buttonPickColor.Location = new System.Drawing.Point(148, 14);
-            this.buttonPickColor.Name = "buttonPickColor";
-            this.buttonPickColor.Size = new System.Drawing.Size(64, 22);
-            this.buttonPickColor.TabIndex = 15;
-            this.buttonPickColor.Text = "Pick Color";
-            this.buttonPickColor.UseVisualStyleBackColor = true;
-            this.buttonPickColor.Click += new System.EventHandler(this.buttonPickColor_Click);
-            // 
             // buttonSaveImage
             // 
-            this.buttonSaveImage.Location = new System.Drawing.Point(124, 2);
+            this.buttonSaveImage.Location = new System.Drawing.Point(62, 2);
             this.buttonSaveImage.Name = "buttonSaveImage";
             this.buttonSaveImage.Size = new System.Drawing.Size(50, 34);
             this.buttonSaveImage.TabIndex = 16;
@@ -313,9 +306,9 @@
             // colorPicked
             // 
             this.colorPicked.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.colorPicked.Location = new System.Drawing.Point(214, 15);
+            this.colorPicked.Location = new System.Drawing.Point(145, 14);
             this.colorPicked.Name = "colorPicked";
-            this.colorPicked.Size = new System.Drawing.Size(64, 22);
+            this.colorPicked.Size = new System.Drawing.Size(29, 22);
             this.colorPicked.TabIndex = 22;
             this.colorPicked.UseVisualStyleBackColor = false;
             this.colorPicked.Click += new System.EventHandler(this.buttonPickColor_Click);
@@ -327,13 +320,15 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.trackBarLineThickness);
             this.splitContainer1.Panel1.Controls.Add(this.buttonClear);
             this.splitContainer1.Panel1.Controls.Add(this.colorPicked);
             this.splitContainer1.Panel1.Controls.Add(this.textBoxRows);
             this.splitContainer1.Panel1.Controls.Add(this.textBoxColumns);
             this.splitContainer1.Panel1.Controls.Add(this.labelRows);
             this.splitContainer1.Panel1.Controls.Add(this.labelCol);
-            this.splitContainer1.Panel1.Controls.Add(this.buttonPickColor);
+            this.splitContainer1.Panel1.Controls.Add(this.labelLineThickness);
+            this.splitContainer1.Panel1.Controls.Add(this.checkBoxBlurredLine);
             // 
             // splitContainer1.Panel2
             // 
@@ -343,12 +338,45 @@
             this.splitContainer1.Panel2.Controls.Add(this.checkBoxBinary);
             this.splitContainer1.Panel2.Controls.Add(this.checkBoxInvert);
             this.splitContainer1.Size = new System.Drawing.Size(756, 39);
-            this.splitContainer1.SplitterDistance = 322;
+            this.splitContainer1.SplitterDistance = 388;
             this.splitContainer1.TabIndex = 23;
             // 
             // saveFileDialog
             // 
             this.saveFileDialog.Filter = "Image files (*.bmp)|*.bmp|All files (*.*)|*.*";
+            // 
+            // trackBarLineThickness
+            // 
+            this.trackBarLineThickness.Location = new System.Drawing.Point(286, 5);
+            this.trackBarLineThickness.Maximum = 5;
+            this.trackBarLineThickness.Minimum = 1;
+            this.trackBarLineThickness.Name = "trackBarLineThickness";
+            this.trackBarLineThickness.Size = new System.Drawing.Size(100, 45);
+            this.trackBarLineThickness.TabIndex = 23;
+            this.trackBarLineThickness.Value = 1;
+            // 
+            // labelLineThickness
+            // 
+            this.labelLineThickness.AutoSize = true;
+            this.labelLineThickness.Location = new System.Drawing.Point(205, 5);
+            this.labelLineThickness.Name = "labelLineThickness";
+            this.labelLineThickness.Size = new System.Drawing.Size(79, 13);
+            this.labelLineThickness.TabIndex = 24;
+            this.labelLineThickness.Text = "Line Thickness";
+            // 
+            // checkBoxBlurredLine
+            // 
+            this.checkBoxBlurredLine.AutoSize = true;
+            this.checkBoxBlurredLine.Checked = true;
+            this.checkBoxBlurredLine.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxBlurredLine.Location = new System.Drawing.Point(188, 20);
+            this.checkBoxBlurredLine.Name = "checkBoxBlurredLine";
+            this.checkBoxBlurredLine.Size = new System.Drawing.Size(98, 17);
+            this.checkBoxBlurredLine.TabIndex = 25;
+            this.checkBoxBlurredLine.Text = "Blurred Corners";
+            this.checkBoxBlurredLine.ThreeState = true;
+            this.checkBoxBlurredLine.UseVisualStyleBackColor = true;
+            this.checkBoxBlurredLine.CheckedChanged += new System.EventHandler(this.checkBoxBlurredLine_CheckedChanged);
             // 
             // Image2Text
             // 
@@ -369,6 +397,7 @@
             this.MaximizeBox = false;
             this.Name = "Image2Text";
             this.Text = "Image2Text";
+            this.Load += new System.EventHandler(this.Image2Text_Load);
             ((System.ComponentModel.ISupportInitialize)(this.imageBoxInput)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageBoxGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageBoxPreview)).EndInit();
@@ -379,6 +408,7 @@
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarLineThickness)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -402,7 +432,6 @@
         private System.Windows.Forms.Label labelCol;
         private System.Windows.Forms.Button buttonClear;
         private System.Windows.Forms.ColorDialog colorDialog;
-        private System.Windows.Forms.Button buttonPickColor;
         private System.Windows.Forms.Button buttonSaveImage;
         private Emgu.CV.UI.ImageBox imageBoxGrid;
         private Emgu.CV.UI.ImageBox imageBoxPreview;
@@ -413,6 +442,9 @@
         private System.Windows.Forms.Button colorPicked;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.TrackBar trackBarLineThickness;
+        private System.Windows.Forms.Label labelLineThickness;
+        private System.Windows.Forms.CheckBox checkBoxBlurredLine;
     }
 }
 
