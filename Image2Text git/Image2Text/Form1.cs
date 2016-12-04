@@ -53,7 +53,7 @@ namespace Image2Text
                         
                         textBoxInfo.ForeColor = Color.Green;
                         imageBoxInput.Image = imageIn;
-                        textBoxInfo.Text = "Displaying Image";
+                        textBoxInfo.AppendText("\nDisplaying Image");
                        
                         progressBar.PerformStep();
                         saveMultiple(path2ImageFile);
@@ -62,14 +62,15 @@ namespace Image2Text
                 catch (Exception exep)
                 {
                     textBoxInfo.ForeColor = Color.Red;
-                    textBoxInfo.Text = Convert.ToString(exep);
+                    textBoxInfo.AppendText(Convert.ToString(exep));
                 }
             }
             else
             {
                 textBoxInfo.ForeColor = Color.Red;
-                textBoxInfo.Text = "Error in Opening File, please select bitmap image file";
+                textBoxInfo.AppendText("\nError in Opening File, please select bitmap image file\n");
             }
+            gridGenerator();
             openFileDialog.Dispose();
         }
         byte maxReference;
@@ -115,14 +116,14 @@ namespace Image2Text
                     fs.Write("}};");
                     fs.Flush(); // Added
                     textBoxInfo.ForeColor = Color.Green;
-                    textBoxInfo.Text = "Conversion Done";
+                    textBoxInfo.AppendText("\nConversion Done"); 
                 }
             }
             catch (Exception exep)
             {
                 //display error here
                 textBoxInfo.ForeColor = Color.Red;
-                textBoxInfo.Text = Convert.ToString(exep);
+                textBoxInfo.AppendText("\n"+Convert.ToString(exep));
             }
         }
 
@@ -139,6 +140,8 @@ namespace Image2Text
               
                 previousPoint = currentPoint;
             }
+            imageBoxPreview.Image = imageIn;
+            imageBoxPreview.SetZoomScale(0.5, new Point(imageBoxPreview.Width / 2, imageBoxPreview.Height / 2));
             imageBoxInput.Image = imageIn;
         }
 
@@ -153,37 +156,18 @@ namespace Image2Text
                 previousPoint = coordinatesConversion(e.X, e.Y);
                 CvInvoke.Line(imageIn, previousPoint, previousPoint, lineColor);
                 imageBoxInput.Image = imageIn;
-         
+            imageBoxPreview.Image = imageIn;
+            imageBoxPreview.SetZoomScale(0.5, new Point(imageBoxPreview.Width/2, imageBoxPreview.Height/2));
         }
 
         private Point coordinatesConversion(int x, int y)
         {
             Point convertedPoint;
             float X, Y;
-
             var wRatio = (float)imageBoxInput.Width / totalCols;
             var hRatio = (float)imageBoxInput.Height / totalRows;
-            X = x / wRatio;
-            Y = y / hRatio;
-            convertedPoint = new Point((int)X, (int)Y);
-
-            //float imgBoxAspectRatio = imageBoxInput.Width / imageBoxInput.Height;
-            //float imageAspectRatio = totalCols / totalRows;
-
-            //if (imgBoxAspectRatio > imageAspectRatio)
-            //{
-            //    Y = totalRows * y / imageBoxInput.Height;
-            //    float scaledWidth = totalCols * imageBoxInput.Height / totalRows;
-            //    var dx = (totalCols - scaledWidth) / 2;
-            //    X = (x - dx) * totalRows / imageBoxInput.Height;
-            //}
-            //else
-            //{
-            //    X = totalCols * x  / imageBoxInput.Width;
-            //    float scaledHeight = totalRows * imageBoxInput.Width / totalCols;
-            //    var dy = (totalRows - scaledHeight) / 2;
-            //    Y = (y - dy) * totalCols / imageBoxInput.Width;
-            //}
+            X = (x / wRatio);
+            Y = (y / hRatio);
             convertedPoint = new Point((int)X, (int)Y);
             return convertedPoint;
         }
@@ -210,30 +194,32 @@ namespace Image2Text
             catch (Exception)
             {
                 textBoxInfo.ForeColor = Color.Red;
-                textBoxInfo.Text = "Error in generating blank image, did you selected proper resolution?";
+                textBoxInfo.AppendText("\nError in generating blank image, did you selected proper resolution?");
             }
-
+            gridGenerator();
+        }
+        private void gridGenerator()
+        {
             //creating Grid
             grid = new Image<Bgra, byte>(500, 500);
-            for (int row = 0; row < grid.Rows; row++)
+            for (int row = 0; row < grid.Rows-5; row++)
             {
-             
-                for (int col = 0; col < grid.Cols; col++)
+
+                for (int col = 0; col < grid.Cols-5; col++)
                 {
                     grid.Data[row, col, 1] = 0;
                     grid.Data[row, col, 2] = 0;
                     grid.Data[row, col, 0] = 0;
                     grid.Data[row, col, 3] = 0;
 
-                    if (row % (grid.Rows/totalRows) == 0)
+                    if (row % (grid.Rows / totalRows) == 0)
                     {
-                       grid.Data[row, col, 3] = 250;
+                        if (col % (grid.Rows / totalRows) == 0)
+                        {
+                            grid.Data[row, col, 3] = 250;      
+                        }
                     }
-                    if (col % (grid.Rows / totalRows) == 0)
-                    {
-                        grid.Data[row, col, 3] = 250;
-
-                    }
+                  
                 }
             }
             imageBoxGrid.Parent = imageBoxInput;
@@ -248,18 +234,27 @@ namespace Image2Text
             {
                 var selectedColor = colorDialog.Color;
                 lineColor = new MCvScalar(selectedColor.B, selectedColor.G, selectedColor.R);
+                colorPicked.BackColor = selectedColor;
             }
+
         }
 
         private void buttonSaveImage_Click(object sender, EventArgs e)
         {
             try
             {
-                CvInvoke.Imwrite("testImage.bmp", imageIn);
+                var res = saveFileDialog.ShowDialog();
+                if (res == DialogResult.OK)
+                {
+                    var fileName = saveFileDialog.FileName;
+                    CvInvoke.Imwrite(fileName, imageIn);
+                    textBoxInfo.AppendText("\nImage Saved: " + fileName);
+                }
+               
             }
             catch (Exception)
             {
-                textBoxInfo.Text="Error in saving Image, did you open or made New file?";              
+                textBoxInfo.AppendText("\nError in saving Image, did you open or made New file?");              
             }           
         }
 
@@ -269,7 +264,7 @@ namespace Image2Text
             if (totalCols == 0 || totalRows == 0)
             {
                 textBoxInfo.ForeColor = Color.Red;
-                textBoxInfo.Text = "Please Select Image first";
+                textBoxInfo.AppendText("\nPlease Select Image first");
             }
             else
             {
@@ -316,7 +311,7 @@ namespace Image2Text
                             fs.Write("}};");
                             fs.Flush(); // Added
                             textBoxInfo.ForeColor = Color.Green;
-                            textBoxInfo.Text = "Conversion Done";
+                            textBoxInfo.AppendText("\nConversion Done");
                         }
 
                     }
@@ -324,13 +319,13 @@ namespace Image2Text
                     {
                         //display error here
                         textBoxInfo.ForeColor = Color.Red;
-                        textBoxInfo.Text = Convert.ToString(exep);
+                        textBoxInfo.AppendText("\n"+Convert.ToString(exep));
                     }
                 }
                 else
                 {
                     textBoxInfo.ForeColor = Color.Red;
-                    textBoxInfo.Text = "Error in Creating File, please create or select text file (.txt)";
+                    textBoxInfo.AppendText("\nError in Creating File, please create or select text file (.txt)");
                 }
                 saveFileDialog1.Dispose();
                 imageIn.Dispose();

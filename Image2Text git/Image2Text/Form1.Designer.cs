@@ -49,13 +49,27 @@
             this.buttonPickColor = new System.Windows.Forms.Button();
             this.buttonSaveImage = new System.Windows.Forms.Button();
             this.imageBoxGrid = new Emgu.CV.UI.ImageBox();
+            this.imageBoxPreview = new Emgu.CV.UI.ImageBox();
+            this.labelPreview = new System.Windows.Forms.Label();
+            this.borderPanel1 = new Microsoft.TeamFoundation.Client.BorderPanel();
+            this.borderPanel2 = new Microsoft.TeamFoundation.Client.BorderPanel();
+            this.borderPanel3 = new Microsoft.TeamFoundation.Client.BorderPanel();
+            this.colorPicked = new System.Windows.Forms.Button();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.imageBoxInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageBoxGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imageBoxPreview)).BeginInit();
+            this.borderPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonOpenImage
             // 
-            this.buttonOpenImage.Location = new System.Drawing.Point(276, 510);
+            this.buttonOpenImage.Location = new System.Drawing.Point(202, 2);
             this.buttonOpenImage.Name = "buttonOpenImage";
             this.buttonOpenImage.Size = new System.Drawing.Size(75, 34);
             this.buttonOpenImage.TabIndex = 0;
@@ -65,7 +79,7 @@
             // 
             // buttonSaveFile
             // 
-            this.buttonSaveFile.Location = new System.Drawing.Point(357, 510);
+            this.buttonSaveFile.Location = new System.Drawing.Point(283, 2);
             this.buttonSaveFile.Name = "buttonSaveFile";
             this.buttonSaveFile.Size = new System.Drawing.Size(75, 34);
             this.buttonSaveFile.TabIndex = 1;
@@ -85,6 +99,7 @@
             this.imageBoxInput.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.imageBoxInput.BackColor = System.Drawing.SystemColors.Control;
             this.imageBoxInput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imageBoxInput.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
             this.imageBoxInput.Location = new System.Drawing.Point(4, 5);
             this.imageBoxInput.Name = "imageBoxInput";
             this.imageBoxInput.Size = new System.Drawing.Size(500, 500);
@@ -104,7 +119,7 @@
             this.textBoxInfo.Location = new System.Drawing.Point(5, 593);
             this.textBoxInfo.Name = "textBoxInfo";
             this.textBoxInfo.ReadOnly = true;
-            this.textBoxInfo.Size = new System.Drawing.Size(500, 53);
+            this.textBoxInfo.Size = new System.Drawing.Size(751, 53);
             this.textBoxInfo.TabIndex = 3;
             this.textBoxInfo.Text = "Please open image file";
             // 
@@ -120,7 +135,7 @@
             // checkBoxBinary
             // 
             this.checkBoxBinary.AutoSize = true;
-            this.checkBoxBinary.Location = new System.Drawing.Point(453, 509);
+            this.checkBoxBinary.Location = new System.Drawing.Point(373, 4);
             this.checkBoxBinary.Name = "checkBoxBinary";
             this.checkBoxBinary.Size = new System.Drawing.Size(55, 17);
             this.checkBoxBinary.TabIndex = 5;
@@ -129,9 +144,9 @@
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(5, 549);
+            this.progressBar.Location = new System.Drawing.Point(5, 551);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(500, 23);
+            this.progressBar.Size = new System.Drawing.Size(753, 23);
             this.progressBar.TabIndex = 6;
             // 
             // checkBoxInvert
@@ -139,7 +154,7 @@
             this.checkBoxInvert.AutoSize = true;
             this.checkBoxInvert.Checked = true;
             this.checkBoxInvert.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxInvert.Location = new System.Drawing.Point(453, 528);
+            this.checkBoxInvert.Location = new System.Drawing.Point(373, 21);
             this.checkBoxInvert.Name = "checkBoxInvert";
             this.checkBoxInvert.Size = new System.Drawing.Size(53, 17);
             this.checkBoxInvert.TabIndex = 7;
@@ -148,7 +163,7 @@
             // 
             // textBoxRows
             // 
-            this.textBoxRows.Location = new System.Drawing.Point(56, 523);
+            this.textBoxRows.Location = new System.Drawing.Point(103, 14);
             this.textBoxRows.Mask = "000";
             this.textBoxRows.Name = "textBoxRows";
             this.textBoxRows.Size = new System.Drawing.Size(41, 20);
@@ -157,7 +172,7 @@
             // 
             // textBoxColumns
             // 
-            this.textBoxColumns.Location = new System.Drawing.Point(104, 523);
+            this.textBoxColumns.Location = new System.Drawing.Point(58, 14);
             this.textBoxColumns.Mask = "000";
             this.textBoxColumns.Name = "textBoxColumns";
             this.textBoxColumns.Size = new System.Drawing.Size(41, 20);
@@ -167,7 +182,7 @@
             // labelRows
             // 
             this.labelRows.AutoSize = true;
-            this.labelRows.Location = new System.Drawing.Point(57, 510);
+            this.labelRows.Location = new System.Drawing.Point(104, 1);
             this.labelRows.Name = "labelRows";
             this.labelRows.Size = new System.Drawing.Size(38, 13);
             this.labelRows.TabIndex = 11;
@@ -176,7 +191,7 @@
             // labelCol
             // 
             this.labelCol.AutoSize = true;
-            this.labelCol.Location = new System.Drawing.Point(107, 510);
+            this.labelCol.Location = new System.Drawing.Point(61, 1);
             this.labelCol.Name = "labelCol";
             this.labelCol.Size = new System.Drawing.Size(35, 13);
             this.labelCol.TabIndex = 12;
@@ -184,7 +199,7 @@
             // 
             // buttonClear
             // 
-            this.buttonClear.Location = new System.Drawing.Point(5, 511);
+            this.buttonClear.Location = new System.Drawing.Point(3, 2);
             this.buttonClear.Name = "buttonClear";
             this.buttonClear.Size = new System.Drawing.Size(49, 34);
             this.buttonClear.TabIndex = 14;
@@ -194,7 +209,7 @@
             // 
             // buttonPickColor
             // 
-            this.buttonPickColor.Location = new System.Drawing.Point(150, 523);
+            this.buttonPickColor.Location = new System.Drawing.Point(148, 14);
             this.buttonPickColor.Name = "buttonPickColor";
             this.buttonPickColor.Size = new System.Drawing.Size(64, 22);
             this.buttonPickColor.TabIndex = 15;
@@ -204,7 +219,7 @@
             // 
             // buttonSaveImage
             // 
-            this.buttonSaveImage.Location = new System.Drawing.Point(220, 511);
+            this.buttonSaveImage.Location = new System.Drawing.Point(124, 2);
             this.buttonSaveImage.Name = "buttonSaveImage";
             this.buttonSaveImage.Size = new System.Drawing.Size(50, 34);
             this.buttonSaveImage.TabIndex = 16;
@@ -216,7 +231,7 @@
             // 
             this.imageBoxGrid.BackColor = System.Drawing.Color.Transparent;
             this.imageBoxGrid.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
-            this.imageBoxGrid.Location = new System.Drawing.Point(4, 5);
+            this.imageBoxGrid.Location = new System.Drawing.Point(110, 5);
             this.imageBoxGrid.Name = "imageBoxGrid";
             this.imageBoxGrid.Size = new System.Drawing.Size(500, 500);
             this.imageBoxGrid.TabIndex = 2;
@@ -225,33 +240,145 @@
             this.imageBoxGrid.MouseMove += new System.Windows.Forms.MouseEventHandler(this.imageBoxInputMouseMove);
             this.imageBoxGrid.MouseUp += new System.Windows.Forms.MouseEventHandler(this.imageBoxInputMouseUp);
             // 
+            // imageBoxPreview
+            // 
+            this.imageBoxPreview.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.imageBoxPreview.BackColor = System.Drawing.SystemColors.Control;
+            this.imageBoxPreview.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
+            this.imageBoxPreview.Location = new System.Drawing.Point(5, 3);
+            this.imageBoxPreview.Name = "imageBoxPreview";
+            this.imageBoxPreview.Size = new System.Drawing.Size(500, 500);
+            this.imageBoxPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.imageBoxPreview.TabIndex = 17;
+            this.imageBoxPreview.TabStop = false;
+            // 
+            // labelPreview
+            // 
+            this.labelPreview.AutoSize = true;
+            this.labelPreview.Location = new System.Drawing.Point(510, 147);
+            this.labelPreview.Name = "labelPreview";
+            this.labelPreview.Size = new System.Drawing.Size(45, 13);
+            this.labelPreview.TabIndex = 18;
+            this.labelPreview.Text = "Preview";
+            // 
+            // borderPanel1
+            // 
+            this.borderPanel1.BackColor = System.Drawing.Color.Transparent;
+            this.borderPanel1.BorderColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.borderPanel1.BorderPadding = new System.Windows.Forms.Padding(0);
+            this.borderPanel1.BorderSides = ((Microsoft.TeamFoundation.Client.BorderPanel.Sides)((((Microsoft.TeamFoundation.Client.BorderPanel.Sides.Top | Microsoft.TeamFoundation.Client.BorderPanel.Sides.Bottom) 
+            | Microsoft.TeamFoundation.Client.BorderPanel.Sides.Left) 
+            | Microsoft.TeamFoundation.Client.BorderPanel.Sides.Right)));
+            this.borderPanel1.BorderStyle = System.Windows.Forms.ButtonBorderStyle.Solid;
+            this.borderPanel1.Controls.Add(this.imageBoxPreview);
+            this.borderPanel1.InnerColor = System.Drawing.SystemColors.Control;
+            this.borderPanel1.Location = new System.Drawing.Point(509, 163);
+            this.borderPanel1.Name = "borderPanel1";
+            this.borderPanel1.Size = new System.Drawing.Size(250, 250);
+            this.borderPanel1.TabIndex = 19;
+            this.borderPanel1.UseInnerColor = false;
+            // 
+            // borderPanel2
+            // 
+            this.borderPanel2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.borderPanel2.BorderColor = System.Drawing.SystemColors.ControlDark;
+            this.borderPanel2.BorderPadding = new System.Windows.Forms.Padding(0);
+            this.borderPanel2.BorderSides = ((Microsoft.TeamFoundation.Client.BorderPanel.Sides)((((Microsoft.TeamFoundation.Client.BorderPanel.Sides.Top | Microsoft.TeamFoundation.Client.BorderPanel.Sides.Bottom) 
+            | Microsoft.TeamFoundation.Client.BorderPanel.Sides.Left) 
+            | Microsoft.TeamFoundation.Client.BorderPanel.Sides.Right)));
+            this.borderPanel2.BorderStyle = System.Windows.Forms.ButtonBorderStyle.Solid;
+            this.borderPanel2.InnerColor = System.Drawing.SystemColors.Control;
+            this.borderPanel2.Location = new System.Drawing.Point(509, 405);
+            this.borderPanel2.Name = "borderPanel2";
+            this.borderPanel2.Size = new System.Drawing.Size(250, 10);
+            this.borderPanel2.TabIndex = 20;
+            this.borderPanel2.UseInnerColor = false;
+            // 
+            // borderPanel3
+            // 
+            this.borderPanel3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.borderPanel3.BorderColor = System.Drawing.SystemColors.ControlDark;
+            this.borderPanel3.BorderPadding = new System.Windows.Forms.Padding(0);
+            this.borderPanel3.BorderSides = ((Microsoft.TeamFoundation.Client.BorderPanel.Sides)((((Microsoft.TeamFoundation.Client.BorderPanel.Sides.Top | Microsoft.TeamFoundation.Client.BorderPanel.Sides.Bottom) 
+            | Microsoft.TeamFoundation.Client.BorderPanel.Sides.Left) 
+            | Microsoft.TeamFoundation.Client.BorderPanel.Sides.Right)));
+            this.borderPanel3.BorderStyle = System.Windows.Forms.ButtonBorderStyle.Solid;
+            this.borderPanel3.InnerColor = System.Drawing.SystemColors.Control;
+            this.borderPanel3.Location = new System.Drawing.Point(758, 163);
+            this.borderPanel3.Name = "borderPanel3";
+            this.borderPanel3.Size = new System.Drawing.Size(3, 251);
+            this.borderPanel3.TabIndex = 21;
+            this.borderPanel3.UseInnerColor = false;
+            // 
+            // colorPicked
+            // 
+            this.colorPicked.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.colorPicked.Location = new System.Drawing.Point(214, 15);
+            this.colorPicked.Name = "colorPicked";
+            this.colorPicked.Size = new System.Drawing.Size(64, 22);
+            this.colorPicked.TabIndex = 22;
+            this.colorPicked.UseVisualStyleBackColor = false;
+            this.colorPicked.Click += new System.EventHandler(this.buttonPickColor_Click);
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Location = new System.Drawing.Point(5, 511);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.buttonClear);
+            this.splitContainer1.Panel1.Controls.Add(this.colorPicked);
+            this.splitContainer1.Panel1.Controls.Add(this.textBoxRows);
+            this.splitContainer1.Panel1.Controls.Add(this.textBoxColumns);
+            this.splitContainer1.Panel1.Controls.Add(this.labelRows);
+            this.splitContainer1.Panel1.Controls.Add(this.labelCol);
+            this.splitContainer1.Panel1.Controls.Add(this.buttonPickColor);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.buttonSaveImage);
+            this.splitContainer1.Panel2.Controls.Add(this.buttonOpenImage);
+            this.splitContainer1.Panel2.Controls.Add(this.buttonSaveFile);
+            this.splitContainer1.Panel2.Controls.Add(this.checkBoxBinary);
+            this.splitContainer1.Panel2.Controls.Add(this.checkBoxInvert);
+            this.splitContainer1.Size = new System.Drawing.Size(756, 39);
+            this.splitContainer1.SplitterDistance = 322;
+            this.splitContainer1.TabIndex = 23;
+            // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.Filter = "Image files (*.bmp)|*.bmp|All files (*.*)|*.*";
+            // 
             // Image2Text
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(514, 652);
-            this.Controls.Add(this.imageBoxGrid);
-            this.Controls.Add(this.buttonSaveImage);
-            this.Controls.Add(this.buttonPickColor);
-            this.Controls.Add(this.buttonClear);
+            this.ClientSize = new System.Drawing.Size(764, 652);
+            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.borderPanel1);
+            this.Controls.Add(this.labelPreview);
             this.Controls.Add(this.imageBoxInput);
-            this.Controls.Add(this.labelCol);
-            this.Controls.Add(this.labelRows);
-            this.Controls.Add(this.textBoxColumns);
-            this.Controls.Add(this.textBoxRows);
-            this.Controls.Add(this.checkBoxInvert);
             this.Controls.Add(this.progressBar);
-            this.Controls.Add(this.checkBoxBinary);
             this.Controls.Add(this.labelInfo);
-            this.Controls.Add(this.buttonSaveFile);
-            this.Controls.Add(this.buttonOpenImage);
             this.Controls.Add(this.textBoxInfo);
+            this.Controls.Add(this.borderPanel2);
+            this.Controls.Add(this.imageBoxGrid);
+            this.Controls.Add(this.borderPanel3);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Image2Text";
             this.Text = "Image2Text";
             ((System.ComponentModel.ISupportInitialize)(this.imageBoxInput)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageBoxGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imageBoxPreview)).EndInit();
+            this.borderPanel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -278,6 +405,14 @@
         private System.Windows.Forms.Button buttonPickColor;
         private System.Windows.Forms.Button buttonSaveImage;
         private Emgu.CV.UI.ImageBox imageBoxGrid;
+        private Emgu.CV.UI.ImageBox imageBoxPreview;
+        private System.Windows.Forms.Label labelPreview;
+        private Microsoft.TeamFoundation.Client.BorderPanel borderPanel1;
+        private Microsoft.TeamFoundation.Client.BorderPanel borderPanel2;
+        private Microsoft.TeamFoundation.Client.BorderPanel borderPanel3;
+        private System.Windows.Forms.Button colorPicked;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
     }
 }
 
