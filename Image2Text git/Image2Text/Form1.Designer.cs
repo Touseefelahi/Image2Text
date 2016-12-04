@@ -28,12 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Image2Text));
             this.buttonOpenImage = new System.Windows.Forms.Button();
             this.buttonSaveFile = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.imageBoxInput = new Emgu.CV.UI.ImageBox();
+            this.imageBoxInput = new System.Windows.Forms.PictureBox();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.textBoxInfo = new System.Windows.Forms.RichTextBox();
             this.labelInfo = new System.Windows.Forms.Label();
@@ -48,7 +47,7 @@
             this.colorDialog = new System.Windows.Forms.ColorDialog();
             this.buttonPickColor = new System.Windows.Forms.Button();
             this.buttonSaveImage = new System.Windows.Forms.Button();
-            this.imageBoxGrid = new Emgu.CV.UI.ImageBox();
+            this.imageBoxGrid = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.imageBoxInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageBoxGrid)).BeginInit();
             this.SuspendLayout();
@@ -88,7 +87,7 @@
             this.imageBoxInput.Location = new System.Drawing.Point(4, 5);
             this.imageBoxInput.Name = "imageBoxInput";
             this.imageBoxInput.Size = new System.Drawing.Size(500, 500);
-            this.imageBoxInput.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.imageBoxInput.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.imageBoxInput.TabIndex = 2;
             this.imageBoxInput.TabStop = false;
             this.imageBoxInput.MouseDown += new System.Windows.Forms.MouseEventHandler(this.imageBoxInputMouseDown);
@@ -215,8 +214,7 @@
             // imageBoxGrid
             // 
             this.imageBoxGrid.BackColor = System.Drawing.Color.Transparent;
-            this.imageBoxGrid.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
-            this.imageBoxGrid.Location = new System.Drawing.Point(4, 5);
+            this.imageBoxGrid.Location = new System.Drawing.Point(262, -118);
             this.imageBoxGrid.Name = "imageBoxGrid";
             this.imageBoxGrid.Size = new System.Drawing.Size(500, 500);
             this.imageBoxGrid.TabIndex = 2;
@@ -230,7 +228,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(514, 652);
-            this.Controls.Add(this.imageBoxGrid);
             this.Controls.Add(this.buttonSaveImage);
             this.Controls.Add(this.buttonPickColor);
             this.Controls.Add(this.buttonClear);
@@ -246,6 +243,7 @@
             this.Controls.Add(this.buttonSaveFile);
             this.Controls.Add(this.buttonOpenImage);
             this.Controls.Add(this.textBoxInfo);
+            this.Controls.Add(this.imageBoxGrid);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Image2Text";
@@ -262,7 +260,8 @@
         private System.Windows.Forms.Button buttonOpenImage;
         private System.Windows.Forms.Button buttonSaveFile;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
-        private Emgu.CV.UI.ImageBox imageBoxInput;
+        // private Emgu.CV.UI.ImageBox imageBoxInput;
+        private System.Windows.Forms.PictureBox imageBoxInput;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.RichTextBox textBoxInfo;
         private System.Windows.Forms.Label labelInfo;
@@ -277,7 +276,8 @@
         private System.Windows.Forms.ColorDialog colorDialog;
         private System.Windows.Forms.Button buttonPickColor;
         private System.Windows.Forms.Button buttonSaveImage;
-        private Emgu.CV.UI.ImageBox imageBoxGrid;
+        // private Emgu.CV.UI.ImageBox imageBoxGrid;
+        private System.Windows.Forms.PictureBox imageBoxGrid;
     }
 }
 

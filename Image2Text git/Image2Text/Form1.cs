@@ -20,7 +20,7 @@ namespace Image2Text
         public Image2Text()
         {
             InitializeComponent();
-            imageBoxInput.FunctionalMode = ImageBox.FunctionalModeOption.Minimum;
+         //   imageBoxInput.FunctionalMode = ImageBox.FunctionalModeOption.Minimum;
             maxReference = 255;
         }
         Image<Bgr, byte> imageIn;
@@ -30,6 +30,7 @@ namespace Image2Text
         bool flagBinary = false;
         bool startDrawing = false;
         int totalRows, totalCols;
+        Bitmap imgDisplay, gridDisplay;
         Point previousPoint;
         MCvScalar lineColor;
         private void buttonOpenImageClick(object sender, EventArgs e)
@@ -52,7 +53,8 @@ namespace Image2Text
                         totalCols = imageIn.Cols;
                         
                         textBoxInfo.ForeColor = Color.Green;
-                        imageBoxInput.Image = imageIn;
+                        imgDisplay = imageIn.Bitmap;
+                        imageBoxInput.Image = imgDisplay;
                         textBoxInfo.Text = "Displaying Image";
                        
                         progressBar.PerformStep();
@@ -139,7 +141,8 @@ namespace Image2Text
               
                 previousPoint = currentPoint;
             }
-            imageBoxInput.Image = imageIn;
+            imgDisplay = imageIn.Bitmap;
+            imageBoxInput.Image = imgDisplay;
         }
 
         private void imageBoxInputMouseUp(object sender, MouseEventArgs e)
@@ -152,8 +155,9 @@ namespace Image2Text
             if (imageIn == null) return;
                 previousPoint = coordinatesConversion(e.X, e.Y);
                 CvInvoke.Line(imageIn, previousPoint, previousPoint, lineColor);
-                imageBoxInput.Image = imageIn;
-         
+            imgDisplay = imageIn.Bitmap;
+            imageBoxInput.Image = imgDisplay;
+
         }
 
         private Point coordinatesConversion(int x, int y)
@@ -205,7 +209,8 @@ namespace Image2Text
 
                     }
                 }
-                imageBoxInput.Image = imageIn;
+                imgDisplay = imageIn.Bitmap;
+                imageBoxInput.Image = imgDisplay;
             }
             catch (Exception)
             {
@@ -214,7 +219,7 @@ namespace Image2Text
             }
 
             //creating Grid
-            grid = new Image<Bgra, byte>(500, 500);
+            grid = new Image<Bgra, byte>(imageBoxGrid.Width, imageBoxGrid.Height);
             for (int row = 0; row < grid.Rows; row++)
             {
              
@@ -238,7 +243,8 @@ namespace Image2Text
             }
             imageBoxGrid.Parent = imageBoxInput;
             imageBoxGrid.Location = new Point(0, 0);
-            imageBoxGrid.Image = grid;
+            gridDisplay = grid.Bitmap;
+            imageBoxGrid.Image = gridDisplay;
         }
 
         private void buttonPickColor_Click(object sender, EventArgs e)
