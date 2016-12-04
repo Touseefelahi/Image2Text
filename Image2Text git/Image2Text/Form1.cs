@@ -135,7 +135,7 @@ namespace Image2Text
             {
                 var currentPoint = coordinatesConversion(e.X, e.Y);
                
-                CvInvoke.Line(imageIn, previousPoint, currentPoint, lineColor);
+                CvInvoke.Line(imageIn, previousPoint, currentPoint, lineColor,1,LineType.EightConnected);
               
                 previousPoint = currentPoint;
             }

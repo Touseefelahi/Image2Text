@@ -88,7 +88,7 @@
             this.imageBoxInput.Location = new System.Drawing.Point(4, 5);
             this.imageBoxInput.Name = "imageBoxInput";
             this.imageBoxInput.Size = new System.Drawing.Size(500, 500);
-            this.imageBoxInput.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.imageBoxInput.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imageBoxInput.TabIndex = 2;
             this.imageBoxInput.TabStop = false;
             this.imageBoxInput.MouseDown += new System.Windows.Forms.MouseEventHandler(this.imageBoxInputMouseDown);
@@ -153,7 +153,7 @@
             this.textBoxRows.Name = "textBoxRows";
             this.textBoxRows.Size = new System.Drawing.Size(41, 20);
             this.textBoxRows.TabIndex = 9;
-            this.textBoxRows.Text = "300";
+            this.textBoxRows.Text = "16";
             // 
             // textBoxColumns
             // 
@@ -162,7 +162,7 @@
             this.textBoxColumns.Name = "textBoxColumns";
             this.textBoxColumns.Size = new System.Drawing.Size(41, 20);
             this.textBoxColumns.TabIndex = 10;
-            this.textBoxColumns.Text = "300";
+            this.textBoxColumns.Text = "16";
             // 
             // labelRows
             // 
