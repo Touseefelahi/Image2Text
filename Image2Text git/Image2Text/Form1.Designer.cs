@@ -54,40 +54,45 @@
             this.borderPanel2 = new Microsoft.TeamFoundation.Client.BorderPanel();
             this.borderPanel3 = new Microsoft.TeamFoundation.Client.BorderPanel();
             this.colorPicked = new System.Windows.Forms.Button();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.trackBarLineThickness = new System.Windows.Forms.TrackBar();
             this.labelLineThickness = new System.Windows.Forms.Label();
             this.checkBoxBlurredLine = new System.Windows.Forms.CheckBox();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.buttonSaveIco = new System.Windows.Forms.Button();
+            this.borderPanel4 = new Microsoft.TeamFoundation.Client.BorderPanel();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.imageBoxInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageBoxGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageBoxPreview)).BeginInit();
             this.borderPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarLineThickness)).BeginInit();
+            this.borderPanel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonOpenImage
             // 
-            this.buttonOpenImage.Location = new System.Drawing.Point(140, 2);
+            this.buttonOpenImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.buttonOpenImage.FlatAppearance.BorderColor = System.Drawing.Color.Blue;
+            this.buttonOpenImage.Location = new System.Drawing.Point(545, 7);
             this.buttonOpenImage.Name = "buttonOpenImage";
             this.buttonOpenImage.Size = new System.Drawing.Size(75, 34);
-            this.buttonOpenImage.TabIndex = 0;
+            this.buttonOpenImage.TabIndex = 4;
             this.buttonOpenImage.Text = "Open Image File";
-            this.buttonOpenImage.UseVisualStyleBackColor = true;
-            this.buttonOpenImage.Click += new System.EventHandler(this.buttonOpenImageClickAsync);
+            this.buttonOpenImage.UseVisualStyleBackColor = false;
+            this.buttonOpenImage.Click += new System.EventHandler(this.buttonOpenImageClick);
             // 
             // buttonSaveFile
             // 
-            this.buttonSaveFile.Location = new System.Drawing.Point(221, 2);
+            this.buttonSaveFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.buttonSaveFile.FlatAppearance.BorderColor = System.Drawing.Color.Fuchsia;
+            this.buttonSaveFile.FlatAppearance.MouseDownBackColor = System.Drawing.Color.SpringGreen;
+            this.buttonSaveFile.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Red;
+            this.buttonSaveFile.Location = new System.Drawing.Point(626, 7);
             this.buttonSaveFile.Name = "buttonSaveFile";
             this.buttonSaveFile.Size = new System.Drawing.Size(75, 34);
-            this.buttonSaveFile.TabIndex = 1;
+            this.buttonSaveFile.TabIndex = 5;
             this.buttonSaveFile.Text = "Conver to Text File";
-            this.buttonSaveFile.UseVisualStyleBackColor = true;
+            this.buttonSaveFile.UseVisualStyleBackColor = false;
             this.buttonSaveFile.Click += new System.EventHandler(this.buttonSaveFileClick);
             // 
             // openFileDialog
@@ -100,10 +105,10 @@
             // imageBoxInput
             // 
             this.imageBoxInput.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.imageBoxInput.BackColor = System.Drawing.SystemColors.Control;
+            this.imageBoxInput.BackColor = System.Drawing.Color.Transparent;
             this.imageBoxInput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.imageBoxInput.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
-            this.imageBoxInput.Location = new System.Drawing.Point(4, 5);
+            this.imageBoxInput.Location = new System.Drawing.Point(2, 3);
             this.imageBoxInput.Name = "imageBoxInput";
             this.imageBoxInput.Size = new System.Drawing.Size(500, 500);
             this.imageBoxInput.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -119,7 +124,8 @@
             // 
             // textBoxInfo
             // 
-            this.textBoxInfo.Location = new System.Drawing.Point(5, 593);
+            this.textBoxInfo.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.textBoxInfo.Location = new System.Drawing.Point(5, 577);
             this.textBoxInfo.Name = "textBoxInfo";
             this.textBoxInfo.ReadOnly = true;
             this.textBoxInfo.Size = new System.Drawing.Size(751, 53);
@@ -129,7 +135,7 @@
             // labelInfo
             // 
             this.labelInfo.AutoSize = true;
-            this.labelInfo.Location = new System.Drawing.Point(5, 580);
+            this.labelInfo.Location = new System.Drawing.Point(5, 564);
             this.labelInfo.Name = "labelInfo";
             this.labelInfo.Size = new System.Drawing.Size(25, 13);
             this.labelInfo.TabIndex = 4;
@@ -138,54 +144,62 @@
             // checkBoxBinary
             // 
             this.checkBoxBinary.AutoSize = true;
-            this.checkBoxBinary.Location = new System.Drawing.Point(311, 4);
+            this.checkBoxBinary.BackColor = System.Drawing.Color.Transparent;
+            this.checkBoxBinary.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.checkBoxBinary.Location = new System.Drawing.Point(706, 7);
             this.checkBoxBinary.Name = "checkBoxBinary";
             this.checkBoxBinary.Size = new System.Drawing.Size(55, 17);
-            this.checkBoxBinary.TabIndex = 5;
+            this.checkBoxBinary.TabIndex = 6;
             this.checkBoxBinary.Text = "Binary";
-            this.checkBoxBinary.UseVisualStyleBackColor = true;
+            this.checkBoxBinary.UseVisualStyleBackColor = false;
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(5, 551);
+            this.progressBar.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.progressBar.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.progressBar.Location = new System.Drawing.Point(5, 552);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(753, 23);
+            this.progressBar.Size = new System.Drawing.Size(757, 10);
+            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBar.TabIndex = 6;
             // 
             // checkBoxInvert
             // 
             this.checkBoxInvert.AutoSize = true;
+            this.checkBoxInvert.BackColor = System.Drawing.Color.Transparent;
             this.checkBoxInvert.Checked = true;
             this.checkBoxInvert.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxInvert.Location = new System.Drawing.Point(311, 21);
+            this.checkBoxInvert.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.checkBoxInvert.Location = new System.Drawing.Point(706, 24);
             this.checkBoxInvert.Name = "checkBoxInvert";
             this.checkBoxInvert.Size = new System.Drawing.Size(53, 17);
             this.checkBoxInvert.TabIndex = 7;
             this.checkBoxInvert.Text = "Invert";
-            this.checkBoxInvert.UseVisualStyleBackColor = true;
+            this.checkBoxInvert.UseVisualStyleBackColor = false;
             // 
             // textBoxRows
             // 
-            this.textBoxRows.Location = new System.Drawing.Point(103, 15);
+            this.textBoxRows.Location = new System.Drawing.Point(102, 17);
             this.textBoxRows.Mask = "000";
             this.textBoxRows.Name = "textBoxRows";
             this.textBoxRows.Size = new System.Drawing.Size(41, 20);
-            this.textBoxRows.TabIndex = 9;
-            this.textBoxRows.Text = "16";
+            this.textBoxRows.TabIndex = 1;
+            this.textBoxRows.Text = "32";
             // 
             // textBoxColumns
             // 
-            this.textBoxColumns.Location = new System.Drawing.Point(58, 15);
+            this.textBoxColumns.Location = new System.Drawing.Point(57, 17);
             this.textBoxColumns.Mask = "000";
             this.textBoxColumns.Name = "textBoxColumns";
             this.textBoxColumns.Size = new System.Drawing.Size(41, 20);
-            this.textBoxColumns.TabIndex = 10;
-            this.textBoxColumns.Text = "16";
+            this.textBoxColumns.TabIndex = 0;
+            this.textBoxColumns.Text = "32";
             // 
             // labelRows
             // 
             this.labelRows.AutoSize = true;
-            this.labelRows.Location = new System.Drawing.Point(104, 1);
+            this.labelRows.BackColor = System.Drawing.Color.Transparent;
+            this.labelRows.Location = new System.Drawing.Point(104, 3);
             this.labelRows.Name = "labelRows";
             this.labelRows.Size = new System.Drawing.Size(38, 13);
             this.labelRows.TabIndex = 11;
@@ -194,7 +208,8 @@
             // labelCol
             // 
             this.labelCol.AutoSize = true;
-            this.labelCol.Location = new System.Drawing.Point(61, 1);
+            this.labelCol.BackColor = System.Drawing.Color.Transparent;
+            this.labelCol.Location = new System.Drawing.Point(61, 3);
             this.labelCol.Name = "labelCol";
             this.labelCol.Size = new System.Drawing.Size(35, 13);
             this.labelCol.TabIndex = 12;
@@ -202,29 +217,33 @@
             // 
             // buttonClear
             // 
-            this.buttonClear.Location = new System.Drawing.Point(3, 2);
+            this.buttonClear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.buttonClear.FlatAppearance.BorderColor = System.Drawing.Color.Blue;
+            this.buttonClear.Location = new System.Drawing.Point(3, 4);
             this.buttonClear.Name = "buttonClear";
             this.buttonClear.Size = new System.Drawing.Size(49, 34);
-            this.buttonClear.TabIndex = 14;
+            this.buttonClear.TabIndex = 2;
             this.buttonClear.Text = "New";
-            this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.UseVisualStyleBackColor = false;
             this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
             // buttonSaveImage
             // 
-            this.buttonSaveImage.Location = new System.Drawing.Point(62, 2);
+            this.buttonSaveImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.buttonSaveImage.FlatAppearance.BorderColor = System.Drawing.Color.Blue;
+            this.buttonSaveImage.Location = new System.Drawing.Point(467, 7);
             this.buttonSaveImage.Name = "buttonSaveImage";
             this.buttonSaveImage.Size = new System.Drawing.Size(50, 34);
             this.buttonSaveImage.TabIndex = 16;
             this.buttonSaveImage.Text = "Save Image";
-            this.buttonSaveImage.UseVisualStyleBackColor = true;
+            this.buttonSaveImage.UseVisualStyleBackColor = false;
             this.buttonSaveImage.Click += new System.EventHandler(this.buttonSaveImage_Click);
             // 
             // imageBoxGrid
             // 
             this.imageBoxGrid.BackColor = System.Drawing.Color.Transparent;
             this.imageBoxGrid.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
-            this.imageBoxGrid.Location = new System.Drawing.Point(110, 5);
+            this.imageBoxGrid.Location = new System.Drawing.Point(110, 2);
             this.imageBoxGrid.Name = "imageBoxGrid";
             this.imageBoxGrid.Size = new System.Drawing.Size(500, 500);
             this.imageBoxGrid.TabIndex = 2;
@@ -236,18 +255,20 @@
             // imageBoxPreview
             // 
             this.imageBoxPreview.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.imageBoxPreview.BackColor = System.Drawing.SystemColors.Control;
+            this.imageBoxPreview.BackColor = System.Drawing.Color.Transparent;
             this.imageBoxPreview.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
             this.imageBoxPreview.Location = new System.Drawing.Point(5, 3);
             this.imageBoxPreview.Name = "imageBoxPreview";
             this.imageBoxPreview.Size = new System.Drawing.Size(500, 500);
-            this.imageBoxPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.imageBoxPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.imageBoxPreview.TabIndex = 17;
             this.imageBoxPreview.TabStop = false;
             // 
             // labelPreview
             // 
             this.labelPreview.AutoSize = true;
+            this.labelPreview.BackColor = System.Drawing.Color.Transparent;
+            this.labelPreview.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.labelPreview.Location = new System.Drawing.Point(510, 147);
             this.labelPreview.Name = "labelPreview";
             this.labelPreview.Size = new System.Drawing.Size(45, 13);
@@ -306,59 +327,30 @@
             // colorPicked
             // 
             this.colorPicked.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.colorPicked.Location = new System.Drawing.Point(145, 14);
+            this.colorPicked.Location = new System.Drawing.Point(145, 16);
             this.colorPicked.Name = "colorPicked";
             this.colorPicked.Size = new System.Drawing.Size(29, 22);
             this.colorPicked.TabIndex = 22;
             this.colorPicked.UseVisualStyleBackColor = false;
             this.colorPicked.Click += new System.EventHandler(this.buttonPickColor_Click);
             // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Location = new System.Drawing.Point(5, 511);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.trackBarLineThickness);
-            this.splitContainer1.Panel1.Controls.Add(this.buttonClear);
-            this.splitContainer1.Panel1.Controls.Add(this.colorPicked);
-            this.splitContainer1.Panel1.Controls.Add(this.textBoxRows);
-            this.splitContainer1.Panel1.Controls.Add(this.textBoxColumns);
-            this.splitContainer1.Panel1.Controls.Add(this.labelRows);
-            this.splitContainer1.Panel1.Controls.Add(this.labelCol);
-            this.splitContainer1.Panel1.Controls.Add(this.labelLineThickness);
-            this.splitContainer1.Panel1.Controls.Add(this.checkBoxBlurredLine);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.buttonSaveImage);
-            this.splitContainer1.Panel2.Controls.Add(this.buttonOpenImage);
-            this.splitContainer1.Panel2.Controls.Add(this.buttonSaveFile);
-            this.splitContainer1.Panel2.Controls.Add(this.checkBoxBinary);
-            this.splitContainer1.Panel2.Controls.Add(this.checkBoxInvert);
-            this.splitContainer1.Size = new System.Drawing.Size(756, 39);
-            this.splitContainer1.SplitterDistance = 388;
-            this.splitContainer1.TabIndex = 23;
-            // 
-            // saveFileDialog
-            // 
-            this.saveFileDialog.Filter = "Image files (*.bmp)|*.bmp|All files (*.*)|*.*";
-            // 
             // trackBarLineThickness
             // 
-            this.trackBarLineThickness.Location = new System.Drawing.Point(286, 5);
+            this.trackBarLineThickness.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.trackBarLineThickness.LargeChange = 1;
+            this.trackBarLineThickness.Location = new System.Drawing.Point(299, 1);
             this.trackBarLineThickness.Maximum = 5;
             this.trackBarLineThickness.Minimum = 1;
             this.trackBarLineThickness.Name = "trackBarLineThickness";
             this.trackBarLineThickness.Size = new System.Drawing.Size(100, 45);
-            this.trackBarLineThickness.TabIndex = 23;
+            this.trackBarLineThickness.TabIndex = 2;
             this.trackBarLineThickness.Value = 1;
             // 
             // labelLineThickness
             // 
             this.labelLineThickness.AutoSize = true;
-            this.labelLineThickness.Location = new System.Drawing.Point(205, 5);
+            this.labelLineThickness.BackColor = System.Drawing.Color.Transparent;
+            this.labelLineThickness.Location = new System.Drawing.Point(204, 6);
             this.labelLineThickness.Name = "labelLineThickness";
             this.labelLineThickness.Size = new System.Drawing.Size(79, 13);
             this.labelLineThickness.TabIndex = 24;
@@ -367,32 +359,96 @@
             // checkBoxBlurredLine
             // 
             this.checkBoxBlurredLine.AutoSize = true;
+            this.checkBoxBlurredLine.BackColor = System.Drawing.Color.Transparent;
             this.checkBoxBlurredLine.Checked = true;
             this.checkBoxBlurredLine.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxBlurredLine.Location = new System.Drawing.Point(188, 20);
+            this.checkBoxBlurredLine.Location = new System.Drawing.Point(188, 22);
             this.checkBoxBlurredLine.Name = "checkBoxBlurredLine";
             this.checkBoxBlurredLine.Size = new System.Drawing.Size(98, 17);
             this.checkBoxBlurredLine.TabIndex = 25;
             this.checkBoxBlurredLine.Text = "Blurred Corners";
             this.checkBoxBlurredLine.ThreeState = true;
-            this.checkBoxBlurredLine.UseVisualStyleBackColor = true;
+            this.checkBoxBlurredLine.UseVisualStyleBackColor = false;
             this.checkBoxBlurredLine.CheckedChanged += new System.EventHandler(this.checkBoxBlurredLine_CheckedChanged);
+            // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.Filter = "Image files (*.bmp)|*.bmp|All files (*.*)|*.*";
+            // 
+            // buttonSaveIco
+            // 
+            this.buttonSaveIco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.buttonSaveIco.FlatAppearance.BorderColor = System.Drawing.Color.Blue;
+            this.buttonSaveIco.Location = new System.Drawing.Point(411, 7);
+            this.buttonSaveIco.Name = "buttonSaveIco";
+            this.buttonSaveIco.Size = new System.Drawing.Size(50, 34);
+            this.buttonSaveIco.TabIndex = 17;
+            this.buttonSaveIco.Text = "Save Icon";
+            this.buttonSaveIco.UseVisualStyleBackColor = false;
+            this.buttonSaveIco.Click += new System.EventHandler(this.buttonSaveIco_Click);
+            // 
+            // borderPanel4
+            // 
+            this.borderPanel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.borderPanel4.BorderColor = System.Drawing.SystemColors.ControlDark;
+            this.borderPanel4.BorderPadding = new System.Windows.Forms.Padding(0);
+            this.borderPanel4.BorderSides = ((Microsoft.TeamFoundation.Client.BorderPanel.Sides)((((Microsoft.TeamFoundation.Client.BorderPanel.Sides.Top | Microsoft.TeamFoundation.Client.BorderPanel.Sides.Bottom) 
+            | Microsoft.TeamFoundation.Client.BorderPanel.Sides.Left) 
+            | Microsoft.TeamFoundation.Client.BorderPanel.Sides.Right)));
+            this.borderPanel4.BorderStyle = System.Windows.Forms.ButtonBorderStyle.Solid;
+            this.borderPanel4.Controls.Add(this.labelLineThickness);
+            this.borderPanel4.Controls.Add(this.trackBarLineThickness);
+            this.borderPanel4.Controls.Add(this.buttonClear);
+            this.borderPanel4.Controls.Add(this.buttonSaveFile);
+            this.borderPanel4.Controls.Add(this.colorPicked);
+            this.borderPanel4.Controls.Add(this.checkBoxInvert);
+            this.borderPanel4.Controls.Add(this.textBoxRows);
+            this.borderPanel4.Controls.Add(this.buttonSaveIco);
+            this.borderPanel4.Controls.Add(this.textBoxColumns);
+            this.borderPanel4.Controls.Add(this.checkBoxBinary);
+            this.borderPanel4.Controls.Add(this.labelRows);
+            this.borderPanel4.Controls.Add(this.buttonOpenImage);
+            this.borderPanel4.Controls.Add(this.buttonSaveImage);
+            this.borderPanel4.Controls.Add(this.labelCol);
+            this.borderPanel4.Controls.Add(this.checkBoxBlurredLine);
+            this.borderPanel4.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.borderPanel4.InnerColor = System.Drawing.SystemColors.Control;
+            this.borderPanel4.Location = new System.Drawing.Point(1, 504);
+            this.borderPanel4.Name = "borderPanel4";
+            this.borderPanel4.Size = new System.Drawing.Size(771, 46);
+            this.borderPanel4.TabIndex = 21;
+            this.borderPanel4.UseInnerColor = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.White;
+            this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label1.Location = new System.Drawing.Point(3, 4);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(58, 13);
+            this.label1.TabIndex = 22;
+            this.label1.Text = "Draw Here";
             // 
             // Image2Text
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(764, 652);
-            this.Controls.Add(this.splitContainer1);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.ClientSize = new System.Drawing.Size(765, 630);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.imageBoxInput);
             this.Controls.Add(this.borderPanel1);
             this.Controls.Add(this.labelPreview);
-            this.Controls.Add(this.imageBoxInput);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.labelInfo);
             this.Controls.Add(this.textBoxInfo);
             this.Controls.Add(this.borderPanel2);
-            this.Controls.Add(this.imageBoxGrid);
             this.Controls.Add(this.borderPanel3);
+            this.Controls.Add(this.borderPanel4);
+            this.Controls.Add(this.imageBoxGrid);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Image2Text";
@@ -402,13 +458,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.imageBoxGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageBoxPreview)).EndInit();
             this.borderPanel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.trackBarLineThickness)).EndInit();
+            this.borderPanel4.ResumeLayout(false);
+            this.borderPanel4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -440,11 +492,13 @@
         private Microsoft.TeamFoundation.Client.BorderPanel borderPanel2;
         private Microsoft.TeamFoundation.Client.BorderPanel borderPanel3;
         private System.Windows.Forms.Button colorPicked;
-        private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.TrackBar trackBarLineThickness;
         private System.Windows.Forms.Label labelLineThickness;
         private System.Windows.Forms.CheckBox checkBoxBlurredLine;
+        private System.Windows.Forms.Button buttonSaveIco;
+        private Microsoft.TeamFoundation.Client.BorderPanel borderPanel4;
+        private System.Windows.Forms.Label label1;
     }
 }
 

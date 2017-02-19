@@ -29,6 +29,7 @@ namespace Image2Text
         {
             info = "Scroll Up/Down to Change Line Thickness";
             lineType = LineType.AntiAlias;
+            buttonClear.PerformClick();
         }
 
         LineType lineType;
@@ -57,9 +58,9 @@ namespace Image2Text
         Point previousPoint;
         MCvScalar lineColor;
 
-        private async void buttonOpenImageClickAsync(object sender, EventArgs e)
+        private async void buttonOpenImageClick(object sender, EventArgs e)
         {
-           
+          
             var res = openFileDialog.ShowDialog();
             if (res == DialogResult.OK)
             {
@@ -79,13 +80,16 @@ namespace Image2Text
                         textBoxInfo.ForeColor = Color.Green;
 
                         imageBoxInput.Image = imageIn;
-                        
                         await Task.Delay(100);
-                        
                         info = "Displaying Image"; 
                         progressBar.PerformStep();
                         saveMultiple(path2ImageFile);
                     }
+                    startDrawing = false;
+                    imageBoxPreview.Image = imageIn;
+                    imageBoxPreview.SetZoomScale(0.5, new Point(imageBoxPreview.Width / 2, imageBoxPreview.Height / 2));
+                    if (totalRows + totalCols < 500)
+                        gridGenerator();
                 }
                 catch (Exception exep)
                 {
@@ -98,10 +102,7 @@ namespace Image2Text
                 textBoxInfo.ForeColor = Color.Red;
                 info="Error in Opening File, please select bitmap image file\n";
             }
-            startDrawing = false;
-            imageBoxPreview.Image = imageIn;
-            imageBoxPreview.SetZoomScale(0.5, new Point(imageBoxPreview.Width / 2, imageBoxPreview.Height / 2));
-            gridGenerator();
+           
             openFileDialog.Dispose();
         }
 
@@ -110,12 +111,24 @@ namespace Image2Text
         {
             try
             {
-                fileName += ".txt";
-                using (StreamWriter fs = new StreamWriter(fileName, true))
+                var splited = fileName.Split('.'); //To remove old extension
+                var newName = "";
+                var builder = new StringBuilder();
+                builder.Append(newName);
+                for (int index = 0; index < splited.Length - 1; index++)
                 {
-                    fs.Write("unsigned int array[" + totalRows + "][" + totalCols + "]=");
+                    builder.Append(splited[index]);
+                }
+                newName = builder.ToString();
+                var splited2=newName.Split('\\');
+                var arrayName = splited2[splited2.Length-1];
+                fileName = newName+".txt";
+                using (StreamWriter fs = new StreamWriter(fileName, false))
+                {
+                    fs.Write("unsigned int "+ arrayName+"[" + totalRows + "][" + totalCols + "]=");
                     int row, col;
                     byte pixel;
+                    fs.Write("{");
                     for (row = 0; row < totalRows; row++)
                     {
                         fs.Write("{");
@@ -148,7 +161,7 @@ namespace Image2Text
                     fs.Write("}};");
                     fs.Flush(); // Added
                     textBoxInfo.ForeColor = Color.Green;
-                    info="Text File Saved in "+fileName;
+                    info = "Text File Saved in " + fileName;
                 }
             }
             catch (Exception exep)
@@ -184,7 +197,7 @@ namespace Image2Text
 
         private void imageBoxInputMouseDown(object sender, MouseEventArgs e)
         {
-            if (imageIn == null) return;
+            if (imageIn == null) { textBoxInfo.ForeColor = Color.Red; info = "Open a file or create a new one"; return; }
                 previousPoint = coordinatesConversion(e.X, e.Y);
                 CvInvoke.Line(imageIn, previousPoint, previousPoint, lineColor, trackBarLineThickness.Value, lineType);
                 imageBoxInput.Image = imageIn;
@@ -228,6 +241,7 @@ namespace Image2Text
                 textBoxInfo.ForeColor = Color.Red;
                 info="Error in generating blank image, did you selected proper resolution?";
             }
+            if(totalRows+totalCols<500)
             gridGenerator();
         }
         private void gridGenerator()
@@ -249,14 +263,14 @@ namespace Image2Text
                         if (col % (grid.Rows / totalRows) == 0)
                         {
                             grid.Data[row, col, 3] = 250;      
-                        }
+                        }                      
                     }
-                  
                 }
             }
             imageBoxGrid.Parent = imageBoxInput;
             imageBoxGrid.Location = new Point(0, 0);
             imageBoxGrid.Image = grid;
+            CvInvoke.Line(grid, new Point(grid.Cols / 2, grid.Rows / 2), new Point(grid.Cols / 2, grid.Rows / 2), new MCvScalar(0, 0, 255,255), 5);
         }
 
         private void buttonPickColor_Click(object sender, EventArgs e)
@@ -300,6 +314,30 @@ namespace Image2Text
                 lineType = LineType.EightConnected;
             else
                 lineType = LineType.FourConnected;
+        }
+
+        private async void buttonSaveIco_Click(object sender, EventArgs e)
+        {
+            CvInvoke.Imwrite("ico.png", imageIn);
+            await Task.Delay(1500);
+            IcoConverter.ConvertToIcon(Application.StartupPath+"//ico.png", Application.StartupPath+"//ico.ico",64);
+/*
+            var res = openFileDialog.ShowDialog();
+            if (res == DialogResult.OK)
+            {
+                var inputPath = openFileDialog.FileName;
+                
+                var res2 = saveFileDialog.ShowDialog();
+                if (res2 == DialogResult.OK)
+                {
+                    var outputPath = saveFileDialog.FileName;
+                    IcoConverter.ConvertToIcon(inputPath, outputPath);
+                }
+                else
+                    return;
+            }
+            else
+                return;*/
         }
 
         private void buttonSaveFileClick(object sender, EventArgs e)

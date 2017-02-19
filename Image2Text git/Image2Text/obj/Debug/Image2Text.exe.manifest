@@ -79,14 +79,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Image2Text.exe" size="84440">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Image2Text.exe" size="1058776">
       <assemblyIdentity name="Image2Text" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>b0aSyYr5+Nlrx0O1lhp3rMXrd945HCbmIu+59KpCfGo=</dsig:DigestValue>
+        <dsig:DigestValue>N1KB+vFuAFJoUSjO+mOKFsSY0vv4VvbUoi9xCFrnhg8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
