@@ -57,7 +57,7 @@ namespace Image2Text
         int totalRows, totalCols;
         Point previousPoint;
         MCvScalar lineColor;
-
+        string lastImagePath;
         private async void buttonOpenImageClick(object sender, EventArgs e)
         {
           
@@ -83,6 +83,7 @@ namespace Image2Text
                         await Task.Delay(100);
                         info = "Displaying Image"; 
                         progressBar.PerformStep();
+                        lastImagePath = path2ImageFile;
                         saveMultiple(path2ImageFile);
                     }
                     startDrawing = false;
@@ -111,6 +112,8 @@ namespace Image2Text
         {
             try
             {
+                var threshold = Convert.ToInt32(maskedTextBoxThreshold.Text);
+                
                 var splited = fileName.Split('.'); //To remove old extension
                 var newName = "";
                 var builder = new StringBuilder();
@@ -118,6 +121,8 @@ namespace Image2Text
                 for (int index = 0; index < splited.Length - 1; index++)
                 {
                     builder.Append(splited[index]);
+                    if(index<splited.Length-2)
+                    builder.Append(".");
                 }
                 newName = builder.ToString();
                 var splited2=newName.Split('\\');
@@ -138,12 +143,21 @@ namespace Image2Text
 
                             if (checkBoxBinary.Checked)
                             {
-                                if (pixel > 122)
+                                if (pixel >= threshold)
                                 {
-                                    fs.Write("0x00");
+                                    if(checkBoxInvert.Checked)
+                                        fs.Write("0");
+                                    else
+                                    fs.Write("255");
                                 }
                                 else
-                                    fs.Write("0xFF");
+                                {
+                                    if (checkBoxInvert.Checked)
+                                        fs.Write("255");
+                                    else
+                                        fs.Write("0"); 
+                                }
+                                    
                             }
                             else
                             {
@@ -320,7 +334,7 @@ namespace Image2Text
         {
             CvInvoke.Imwrite("ico.png", imageIn);
             await Task.Delay(1500);
-            IcoConverter.ConvertToIcon(Application.StartupPath+"//ico.png", Application.StartupPath+"//ico.ico",64);
+            IcoConverter.ConvertToIcon(Application.StartupPath+"//ico.png", lastImagePath+".ico",64);
 /*
             var res = openFileDialog.ShowDialog();
             if (res == DialogResult.OK)

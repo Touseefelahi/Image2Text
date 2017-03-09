@@ -7,14 +7,14 @@
     <framework targetVersion="4.6" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="Image2Text.exe.manifest" size="14587">
+    <dependentAssembly dependencyType="install" codebase="Image2Text.exe.manifest" size="14998">
       <assemblyIdentity name="Image2Text.exe" version="1.0.0.5" publicKeyToken="0000000000000000" language="en" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ZDCH4GQG8Hzz+wnH5NMl9zPXAuOLfz3zOIg2+QJnIE4=</dsig:DigestValue>
+        <dsig:DigestValue>G+dWH5wLp/YHxcbtdoyvigru5z+lETNqF4H2d8AfY24=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

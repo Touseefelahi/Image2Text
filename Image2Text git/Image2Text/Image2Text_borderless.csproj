@@ -68,8 +68,9 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>stira.ico</ApplicationIcon>
+    <ApplicationIcon>symbolWideFOV.bmp.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
@@ -149,6 +150,7 @@
   <ItemGroup>
     <Content Include="License-LGPL.txt" />
     <Content Include="stira.ico" />
+    <Content Include="symbolWideFOV.bmp.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

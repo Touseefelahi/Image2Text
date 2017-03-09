@@ -61,6 +61,8 @@
             this.buttonSaveIco = new System.Windows.Forms.Button();
             this.borderPanel4 = new Microsoft.TeamFoundation.Client.BorderPanel();
             this.label1 = new System.Windows.Forms.Label();
+            this.labelThreshold = new System.Windows.Forms.Label();
+            this.maskedTextBoxThreshold = new System.Windows.Forms.MaskedTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.imageBoxInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageBoxGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageBoxPreview)).BeginInit();
@@ -146,7 +148,7 @@
             this.checkBoxBinary.AutoSize = true;
             this.checkBoxBinary.BackColor = System.Drawing.Color.Transparent;
             this.checkBoxBinary.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.checkBoxBinary.Location = new System.Drawing.Point(706, 7);
+            this.checkBoxBinary.Location = new System.Drawing.Point(659, 469);
             this.checkBoxBinary.Name = "checkBoxBinary";
             this.checkBoxBinary.Size = new System.Drawing.Size(55, 17);
             this.checkBoxBinary.TabIndex = 6;
@@ -170,7 +172,7 @@
             this.checkBoxInvert.Checked = true;
             this.checkBoxInvert.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxInvert.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.checkBoxInvert.Location = new System.Drawing.Point(706, 24);
+            this.checkBoxInvert.Location = new System.Drawing.Point(706, 16);
             this.checkBoxInvert.Name = "checkBoxInvert";
             this.checkBoxInvert.Size = new System.Drawing.Size(53, 17);
             this.checkBoxInvert.TabIndex = 7;
@@ -405,7 +407,6 @@
             this.borderPanel4.Controls.Add(this.textBoxRows);
             this.borderPanel4.Controls.Add(this.buttonSaveIco);
             this.borderPanel4.Controls.Add(this.textBoxColumns);
-            this.borderPanel4.Controls.Add(this.checkBoxBinary);
             this.borderPanel4.Controls.Add(this.labelRows);
             this.borderPanel4.Controls.Add(this.buttonOpenImage);
             this.borderPanel4.Controls.Add(this.buttonSaveImage);
@@ -430,6 +431,26 @@
             this.label1.TabIndex = 22;
             this.label1.Text = "Draw Here";
             // 
+            // labelThreshold
+            // 
+            this.labelThreshold.AutoSize = true;
+            this.labelThreshold.BackColor = System.Drawing.Color.Transparent;
+            this.labelThreshold.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.labelThreshold.Location = new System.Drawing.Point(656, 486);
+            this.labelThreshold.Name = "labelThreshold";
+            this.labelThreshold.Size = new System.Drawing.Size(54, 13);
+            this.labelThreshold.TabIndex = 26;
+            this.labelThreshold.Text = "Threshold";
+            // 
+            // maskedTextBoxThreshold
+            // 
+            this.maskedTextBoxThreshold.Location = new System.Drawing.Point(721, 476);
+            this.maskedTextBoxThreshold.Mask = "000";
+            this.maskedTextBoxThreshold.Name = "maskedTextBoxThreshold";
+            this.maskedTextBoxThreshold.Size = new System.Drawing.Size(41, 20);
+            this.maskedTextBoxThreshold.TabIndex = 26;
+            this.maskedTextBoxThreshold.Text = "122";
+            // 
             // Image2Text
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -437,6 +458,8 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(765, 630);
+            this.Controls.Add(this.maskedTextBoxThreshold);
+            this.Controls.Add(this.labelThreshold);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.imageBoxInput);
             this.Controls.Add(this.borderPanel1);
@@ -446,6 +469,7 @@
             this.Controls.Add(this.textBoxInfo);
             this.Controls.Add(this.borderPanel2);
             this.Controls.Add(this.borderPanel3);
+            this.Controls.Add(this.checkBoxBinary);
             this.Controls.Add(this.borderPanel4);
             this.Controls.Add(this.imageBoxGrid);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -499,6 +523,8 @@
         private System.Windows.Forms.Button buttonSaveIco;
         private Microsoft.TeamFoundation.Client.BorderPanel borderPanel4;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelThreshold;
+        private System.Windows.Forms.MaskedTextBox maskedTextBoxThreshold;
     }
 }
 
